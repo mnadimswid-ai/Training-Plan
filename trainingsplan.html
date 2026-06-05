@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-Wochen Trainingsplan – Anfänger</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --card2: #22263a;
+    --accent: #f97316;
+    --accent2: #fb923c;
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #2d3148;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 24px 20px 20px;
+    text-align: center;
+  }
+  header h1 { font-size: 2rem; color: var(--accent); font-weight: 800; letter-spacing: -0.5px; }
+  header p  { color: var(--muted); margin-top: 4px; font-size: .95rem; }
+  .stats-row {
+    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 16px;
+  }
+  .stat-chip {
+    background: var(--card2); border: 1px solid var(--border); border-radius: 20px;
+    padding: 6px 16px; font-size: .85rem; color: var(--muted);
+  }
+  .stat-chip span { color: var(--accent); font-weight: 700; }
+
+  /* ── OVERALL PROGRESS ── */
+  .overall-progress {
+    max-width: 900px; margin: 20px auto; padding: 0 16px;
+  }
+  .progress-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+  .progress-card h3 { font-size: 1rem; color: var(--muted); margin-bottom: 10px; }
+  .prog-bar-wrap { background: var(--card2); border-radius: 20px; height: 14px; overflow: hidden; }
+  .prog-bar-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .5s; }
+  .prog-label { display: flex; justify-content: space-between; margin-top: 6px; font-size: .82rem; color: var(--muted); }
+
+  /* ── WEEK TABS ── */
+  .week-tabs {
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+    max-width: 900px; margin: 20px auto 0; padding: 0 16px;
+  }
+  .week-tab {
+    background: var(--card); border: 1.5px solid var(--border); border-radius: 30px;
+    padding: 8px 24px; cursor: pointer; font-size: .95rem; font-weight: 600;
+    color: var(--muted); transition: all .2s;
+  }
+  .week-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .week-tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+  /* ── WEEK CONTENT ── */
+  .week-content { display: none; max-width: 900px; margin: 0 auto; padding: 20px 16px 40px; }
+  .week-content.active { display: block; }
+  .week-header { margin-bottom: 20px; }
+  .week-header h2 { font-size: 1.5rem; color: var(--accent); }
+  .week-header p  { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+
+  /* ── DAY CARD ── */
+  .day-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    margin-bottom: 16px; overflow: hidden;
+  }
+  .day-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; cursor: pointer; user-select: none;
+    transition: background .2s;
+  }
+  .day-header:hover { background: var(--card2); }
+  .day-header-left { display: flex; align-items: center; gap: 12px; }
+  .day-badge {
+    width: 44px; height: 44px; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center; font-weight: 800; font-size: .85rem;
+    flex-shrink: 0;
+  }
+  .push  { background: rgba(249,115,22,.15); color: var(--accent); border: 1.5px solid rgba(249,115,22,.3); }
+  .pull  { background: rgba(59,130,246,.15);  color: var(--blue);   border: 1.5px solid rgba(59,130,246,.3); }
+  .legs  { background: rgba(34,197,94,.15);   color: var(--green);  border: 1.5px solid rgba(34,197,94,.3); }
+  .cardio{ background: rgba(239,68,68,.15);   color: var(--red);    border: 1.5px solid rgba(239,68,68,.3); }
+  .full  { background: rgba(168,85,247,.15);  color: #a855f7;       border: 1.5px solid rgba(168,85,247,.3); }
+  .day-title { font-weight: 700; font-size: 1rem; }
+  .day-sub   { color: var(--muted); font-size: .82rem; margin-top: 2px; }
+  .day-done-badge {
+    background: var(--green); color: #fff; border-radius: 20px;
+    padding: 3px 12px; font-size: .75rem; font-weight: 700; display: none;
+  }
+  .day-progress-mini { display: flex; align-items: center; gap: 8px; }
+  .mini-bar-wrap { width: 70px; background: var(--card2); border-radius: 10px; height: 6px; }
+  .mini-bar-fill { height: 100%; border-radius: 10px; background: var(--accent); transition: width .4s; }
+  .mini-pct { font-size: .75rem; color: var(--muted); min-width: 28px; text-align: right; }
+  .chevron { color: var(--muted); font-size: 1.1rem; transition: transform .25s; }
+  .day-card.open .chevron { transform: rotate(180deg); }
+
+  /* ── DAY BODY ── */
+  .day-body { display: none; border-top: 1px solid var(--border); }
+  .day-card.open .day-body { display: block; }
+
+  /* ── EXERCISE GRID ── */
+  .exercise-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px; padding: 20px;
+  }
+  .ex-card {
+    background: var(--card2); border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; transition: border-color .2s, transform .2s;
+  }
+  .ex-card.completed { border-color: var(--green); }
+  .ex-card:hover { transform: translateY(-2px); }
+  .ex-gif {
+    width: 100%; height: 160px; object-fit: cover;
+    background: #111; display: block;
+  }
+  .ex-gif-placeholder {
+    width: 100%; height: 160px; background: #111;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: .8rem;
+  }
+  .ex-info { padding: 12px; }
+  .ex-name { font-weight: 700; font-size: .95rem; margin-bottom: 4px; }
+  .ex-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .ex-tag {
+    background: rgba(249,115,22,.1); color: var(--accent);
+    border: 1px solid rgba(249,115,22,.2); border-radius: 6px;
+    font-size: .72rem; padding: 2px 8px; font-weight: 600;
+  }
+  .ex-tag.blue  { background: rgba(59,130,246,.1);  color: var(--blue);  border-color: rgba(59,130,246,.2); }
+  .ex-tag.green { background: rgba(34,197,94,.1);   color: var(--green); border-color: rgba(34,197,94,.2); }
+  .ex-tip { font-size: .78rem; color: var(--muted); margin-bottom: 12px; line-height: 1.45; }
+
+  /* ── SET TRACKER ── */
+  .set-tracker { display: flex; flex-direction: column; gap: 6px; }
+  .set-row { display: flex; align-items: center; gap: 8px; }
+  .set-label { font-size: .78rem; color: var(--muted); min-width: 38px; }
+  .set-input {
+    width: 58px; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 4px 6px; font-size: .8rem;
+    text-align: center;
+  }
+  .set-input:focus { outline: none; border-color: var(--accent); }
+  .set-input::placeholder { color: #555; }
+  .set-check {
+    width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border);
+    background: var(--bg); cursor: pointer; display: flex; align-items: center;
+    justify-content: center; font-size: .85rem; transition: all .2s; flex-shrink: 0;
+  }
+  .set-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+  .set-unit { font-size: .72rem; color: #555; }
+
+  /* ── CARDIO SECTION ── */
+  .cardio-section { padding: 20px; }
+  .cardio-block {
+    background: var(--card2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; margin-bottom: 12px;
+  }
+  .cardio-block h4 { color: var(--red); margin-bottom: 8px; font-size: .95rem; }
+  .cardio-block p  { color: var(--muted); font-size: .85rem; line-height: 1.5; }
+  .cardio-done-btn {
+    margin-top: 12px; background: var(--red); color: #fff; border: none;
+    border-radius: 8px; padding: 8px 20px; cursor: pointer; font-weight: 700;
+    font-size: .85rem; transition: opacity .2s;
+  }
+  .cardio-done-btn:hover { opacity: .85; }
+  .cardio-done-btn.done { background: var(--green); }
+
+  /* ── DAY COMPLETE BTN ── */
+  .day-footer { padding: 0 20px 20px; }
+  .complete-day-btn {
+    width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; border: none; border-radius: 10px; padding: 12px;
+    font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity .2s;
+  }
+  .complete-day-btn:hover { opacity: .88; }
+  .complete-day-btn.done { background: var(--green); cursor: default; }
+
+  /* ── NOTES ── */
+  .notes-section { padding: 0 20px 16px; }
+  .notes-section label { font-size: .82rem; color: var(--muted); display: block; margin-bottom: 6px; }
+  .notes-section textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 8px 10px; font-size: .82rem;
+    resize: vertical; min-height: 60px; font-family: inherit;
+  }
+  .notes-section textarea:focus { outline: none; border-color: var(--accent); }
+
+  /* ── RESET BTN ── */
+  .top-actions { max-width: 900px; margin: 12px auto 0; padding: 0 16px; display: flex; justify-content: flex-end; gap: 10px; }
+  .reset-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    border-radius: 8px; padding: 7px 16px; cursor: pointer; font-size: .82rem;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── LEGEND ── */
+  .legend { max-width: 900px; margin: 0 auto 20px; padding: 0 16px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  @media(max-width:500px){
+    header h1 { font-size: 1.4rem; }
+    .exercise-grid { grid-template-columns: 1fr; }
+    .week-tab { padding: 7px 14px; font-size: .85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏋️ 4-Wochen Trainingsplan</h1>
+  <p>Anfänger · Fett verbrennen &amp; Muskeln aufbauen</p>
+  <div class="stats-row">
+    <div class="stat-chip">Gewicht: <span>90 kg</span></div>
+    <div class="stat-chip">Größe: <span>177 cm</span></div>
+    <div class="stat-chip">Fokus: <span>Bauch &amp; Brust</span></div>
+    <div class="stat-chip">Trainingstage: <span>5× / Woche</span></div>
+  </div>
+</header>
+
+<div class="top-actions">
+  <button class="reset-btn" onclick="resetAll()">⟳ Alles zurücksetzen</button>
+</div>
+
+<div class="overall-progress">
+  <div class="progress-card">
+    <h3>📊 Gesamtfortschritt (4 Wochen)</h3>
+    <div class="prog-bar-wrap">
+      <div class="prog-bar-fill" id="overall-bar" style="width:0%"></div>
+    </div>
+    <div class="prog-label">
+      <span id="overall-done">0 von 20 Tagen abgeschlossen</span>
+      <span id="overall-pct">0%</span>
+    </div>
+  </div>
+</div>
+
+<div class="week-tabs">
+  <button class="week-tab active" onclick="showWeek(1)">Woche 1</button>
+  <button class="week-tab" onclick="showWeek(2)">Woche 2</button>
+  <button class="week-tab" onclick="showWeek(3)">Woche 3</button>
+  <button class="week-tab" onclick="showWeek(4)">Woche 4</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     WOCHE 1
+═══════════════════════════════════════════════════════ -->
+<div class="week-content active" id="week-1">
+  <div class="week-header">
+    <h2>Woche 1 – Grundlagen &amp; Technik</h2>
+    <p>Fokus: Bewegungslernen, leichte Gewichte, saubere Ausführung. 3 Sätze × 12–15 Wdh.</p>
+  </div>
+
+  <!-- TAG 1 -->
+  <div class="day-card" id="w1d1">
+    <div class="day-header" onclick="toggleDay('w1d1')">
+      <div class="day-header-left">
+        <div class="day-badge push">MO</div>
+        <div>
+          <div class="day-title">Tag 1 – Brust &amp; Trizeps (Push)</div>
+          <div class="day-sub">Montag · 6 Übungen · ca. 50 Min</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="day-progress-mini">
+          <div class="mini-bar-wrap"><div class="mini-bar-fill" id="w1d1-mbar" style="width:0%"></div></div>
+          <div class="mini-pct" id="w1d1-mpct">0%</div>
+        </div>
+        <div class="day-done-badge" id="w1d1-badge">✓ Fertig</div>
+        <span class="chevron">▾</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="exercise-grid">
+
+        <div class="ex-card" id="w1d1-e1">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bench-Press.gif" alt="Bankdrücken" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🏋️ Bankdrücken</div>
+          <div class="ex-info">
+            <div class="ex-name">Bankdrücken (Langhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Brust</span></div>
+            <div class="ex-tip">Stange bis zur Brust senken, Schulterblätter zusammenziehen. Nicht ruckartig drücken.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg" id="w1d1-e1-s1-kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e1','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg" id="w1d1-e1-s2-kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e1','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg" id="w1d1-e1-s3-kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e1','w1d1',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d1-e2">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif" alt="Schrägbankdrücken" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">💪 Schrägbank</div>
+          <div class="ex-info">
+            <div class="ex-name">Schrägbankdrücken (Kurzhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Obere Brust</span></div>
+            <div class="ex-tip">Bank auf 30–45° stellen. Hilft besonders beim Brust-Oberteil zu formen.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e2','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e2','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e2','w1d1',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d1-e3">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Fly.gif" alt="Kabelzug Brust" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🔁 Kabelzug Brust</div>
+          <div class="ex-info">
+            <div class="ex-name">Kabelzug Fliegende (Brust)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Brust innen</span></div>
+            <div class="ex-tip">Arme leicht gebeugt, breite Bewegung. Perfekt für Brustmitte und Fettverbrennung.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e3','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e3','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e3','w1d1',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d1-e4">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Shoulder-Press.gif" alt="Schulterdrücken" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🏋️ Schulter</div>
+          <div class="ex-info">
+            <div class="ex-name">Schulterdrücken (Kurzhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Schultern</span></div>
+            <div class="ex-tip">Rücken gerade, nicht ins Hohlkreuz fallen. Langsam senken (3 Sek).</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e4','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e4','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e4','w1d1',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d1-e5">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lateral-Raise.gif" alt="Seitheben" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">↔️ Seitheben</div>
+          <div class="ex-info">
+            <div class="ex-name">Seitheben (Kurzhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Seitl. Schulter</span></div>
+            <div class="ex-tip">Arme nur bis Schulterhöhe heben. Nicht schwingen – kontrolliert!</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e5','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e5','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e5','w1d1',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d1-e6">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif" alt="Trizeps Pushdown" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">⬇️ Trizeps</div>
+          <div class="ex-info">
+            <div class="ex-name">Trizeps Pushdown (Kabel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Trizeps</span></div>
+            <div class="ex-tip">Ellbogen eng am Körper halten. Volle Streckung am unten.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e6','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e6','w1d1',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d1-e6','w1d1',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="notes-section">
+        <label>📝 Notizen zu diesem Tag:</label>
+        <textarea id="w1d1-notes" onchange="saveNote('w1d1')" placeholder="Wie war das Training? Welche Gewichte? Wie war die Energie?"></textarea>
+      </div>
+      <div class="day-footer">
+        <button class="complete-day-btn" id="w1d1-btn" onclick="completeDay('w1d1')">✓ Tag als abgeschlossen markieren</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAG 2 -->
+  <div class="day-card" id="w1d2">
+    <div class="day-header" onclick="toggleDay('w1d2')">
+      <div class="day-header-left">
+        <div class="day-badge pull">DI</div>
+        <div>
+          <div class="day-title">Tag 2 – Rücken &amp; Bizeps (Pull)</div>
+          <div class="day-sub">Dienstag · 6 Übungen · ca. 50 Min</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="day-progress-mini"><div class="mini-bar-wrap"><div class="mini-bar-fill" id="w1d2-mbar" style="width:0%"></div></div><div class="mini-pct" id="w1d2-mpct">0%</div></div>
+        <div class="day-done-badge" id="w1d2-badge">✓ Fertig</div>
+        <span class="chevron">▾</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="exercise-grid">
+
+        <div class="ex-card" id="w1d2-e1">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif" alt="Lat Pulldown" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">⬇️ Lat Pulldown</div>
+          <div class="ex-info">
+            <div class="ex-name">Latzug (Kabel, breiter Griff)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Rücken</span></div>
+            <div class="ex-tip">Stange zur Brust ziehen, Ellbogen nach unten führen. Rücken leicht nach hinten neigen.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e1','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e1','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e1','w1d2',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d2-e2">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif" alt="Rudern Kabel" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🚣 Kabelrudern</div>
+          <div class="ex-info">
+            <div class="ex-name">Sitzrudern (Kabel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Mitte Rücken</span></div>
+            <div class="ex-tip">Griff zum Bauch ziehen, Ellbogen hinten. Rumpf stabil halten.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e2','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e2','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e2','w1d2',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d2-e3">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Row.gif" alt="Kurzhantel Rudern" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">💪 KH Rudern</div>
+          <div class="ex-info">
+            <div class="ex-name">Einarmiges KH-Rudern</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Rücken</span></div>
+            <div class="ex-tip">Knie auf die Bank stützen. Kurzhantel bis zur Hüfte ziehen, Ellbogen nach oben.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e3','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e3','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e3','w1d2',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d2-e4">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif" alt="Face Pull" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🔃 Face Pull</div>
+          <div class="ex-info">
+            <div class="ex-name">Face Pull (Kabel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag green">Hintere Schulter</span></div>
+            <div class="ex-tip">Seil zum Gesicht ziehen, Ellbogen auf Schulterhöhe. Wichtig für Schultergesundheit!</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e4','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e4','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e4','w1d2',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d2-e5">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Bicep-Curl.gif" alt="Bizeps Curl" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">💪 Bizeps Curl</div>
+          <div class="ex-info">
+            <div class="ex-name">Bizeps Curl (Kurzhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Bizeps</span></div>
+            <div class="ex-tip">Ellbogen am Körper fixieren. Langsam senken (2–3 Sek für mehr Muskelaufbau).</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e5','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e5','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e5','w1d2',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d2-e6">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Hammer-Curl.gif" alt="Hammer Curl" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🔨 Hammer Curl</div>
+          <div class="ex-info">
+            <div class="ex-name">Hammer Curl (Kurzhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Bizeps/Unterarm</span></div>
+            <div class="ex-tip">Daumen zeigt nach oben (neutraler Griff). Trainiert auch den Unterarm.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e6','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e6','w1d2',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d2-e6','w1d2',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="notes-section"><label>📝 Notizen:</label><textarea id="w1d2-notes" onchange="saveNote('w1d2')" placeholder="Notizen..."></textarea></div>
+      <div class="day-footer"><button class="complete-day-btn" id="w1d2-btn" onclick="completeDay('w1d2')">✓ Tag als abgeschlossen markieren</button></div>
+    </div>
+  </div>
+
+  <!-- TAG 3 -->
+  <div class="day-card" id="w1d3">
+    <div class="day-header" onclick="toggleDay('w1d3')">
+      <div class="day-header-left">
+        <div class="day-badge legs">MI</div>
+        <div>
+          <div class="day-title">Tag 3 – Beine &amp; Core</div>
+          <div class="day-sub">Mittwoch · 6 Übungen · ca. 55 Min</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="day-progress-mini"><div class="mini-bar-wrap"><div class="mini-bar-fill" id="w1d3-mbar" style="width:0%"></div></div><div class="mini-pct" id="w1d3-mpct">0%</div></div>
+        <div class="day-done-badge" id="w1d3-badge">✓ Fertig</div>
+        <span class="chevron">▾</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="exercise-grid">
+        <div class="ex-card" id="w1d3-e1">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Back-Squat.gif" alt="Kniebeuge" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🦵 Kniebeuge</div>
+          <div class="ex-info">
+            <div class="ex-name">Kniebeuge (Langhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Beine/Gesäß</span></div>
+            <div class="ex-tip">Füße schulterbreit, Knie über Zehen. Oberschenkel parallel zum Boden = optimal.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e1','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e1','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e1','w1d3',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d3-e2">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Press.gif" alt="Beinpresse" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🦵 Beinpresse</div>
+          <div class="ex-info">
+            <div class="ex-name">Beinpresse (Maschine)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Beine</span></div>
+            <div class="ex-tip">Knie nicht vollständig strecken. Füße hüftbreit auf der Platte.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e2','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e2','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e2','w1d3',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d3-e3">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Curl.gif" alt="Leg Curl" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🦵 Leg Curl</div>
+          <div class="ex-info">
+            <div class="ex-name">Leg Curl (Maschine)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Oberschenkel hinten</span></div>
+            <div class="ex-tip">Langsam senken. Hüfte auf der Bank lassen.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e3','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e3','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d3-e3','w1d3',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d3-e4">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/06/Plank.gif" alt="Plank" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🧘 Plank</div>
+          <div class="ex-info">
+            <div class="ex-name">Plank (Unterarmstütz)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 30 Sek</span><span class="ex-tag green">Core/Bauch</span></div>
+            <div class="ex-tip">Körper gerade wie ein Brett. Gesäß nicht hochziehen. Bauch anspannen! Wichtig für Bauchfett.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d3-e4','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d3-e4','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d3-e4','w1d3',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d3-e5">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Bicycle-Crunch.gif" alt="Bicycle Crunch" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🚴 Bicycle Crunch</div>
+          <div class="ex-info">
+            <div class="ex-name">Bicycle Crunch</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 20</span><span class="ex-tag green">Bauch seitlich</span></div>
+            <div class="ex-tip">Ellbogen zum gegenüberliegenden Knie. Sehr effektiv gegen Bauchfett!</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d3-e5','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d3-e5','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d3-e5','w1d3',6)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-card" id="w1d3-e6">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Raise.gif" alt="Leg Raise" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🦵 Leg Raise</div>
+          <div class="ex-info">
+            <div class="ex-name">Liegende Beinhebe</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag green">Unterer Bauch</span></div>
+            <div class="ex-tip">Beine gestreckt heben. Unterer Rücken flach auf dem Boden halten.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d3-e6','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d3-e6','w1d3',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d3-e6','w1d3',6)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notes-section"><label>📝 Notizen:</label><textarea id="w1d3-notes" onchange="saveNote('w1d3')" placeholder="Notizen..."></textarea></div>
+      <div class="day-footer"><button class="complete-day-btn" id="w1d3-btn" onclick="completeDay('w1d3')">✓ Tag als abgeschlossen markieren</button></div>
+    </div>
+  </div>
+
+  <!-- TAG 4 -->
+  <div class="day-card" id="w1d4">
+    <div class="day-header" onclick="toggleDay('w1d4')">
+      <div class="day-header-left">
+        <div class="day-badge cardio">DO</div>
+        <div>
+          <div class="day-title">Tag 4 – Cardio &amp; Bauch-Intensiv</div>
+          <div class="day-sub">Donnerstag · HIIT + Core · ca. 45 Min</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="day-progress-mini"><div class="mini-bar-wrap"><div class="mini-bar-fill" id="w1d4-mbar" style="width:0%"></div></div><div class="mini-pct" id="w1d4-mpct">0%</div></div>
+        <div class="day-done-badge" id="w1d4-badge">✓ Fertig</div>
+        <span class="chevron">▾</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-section">
+        <div class="cardio-block">
+          <h4>🏃 Warm-up: 5 Min Laufband (5–6 km/h)</h4>
+          <p>Locker einlaufen, Körper aufwärmen. Puls auf ca. 120–130 bringen.</p>
+          <button class="cardio-done-btn" id="w1d4-c1" onclick="toggleCardio(this,'w1d4',5)">Als erledigt markieren</button>
+        </div>
+        <div class="cardio-block">
+          <h4>⚡ HIIT: 20 Min (30 Sek Sprint / 90 Sek Gehen × 8 Runden)</h4>
+          <p>Sprint: 10–12 km/h · Gehen: 4–5 km/h. Sehr effektiv für Fettverbrennung am Bauch!</p>
+          <button class="cardio-done-btn" id="w1d4-c2" onclick="toggleCardio(this,'w1d4',5)">Als erledigt markieren</button>
+        </div>
+      </div>
+      <div class="exercise-grid">
+        <div class="ex-card" id="w1d4-e1">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" alt="Mountain Climber" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🧗 Mountain Climber</div>
+          <div class="ex-info">
+            <div class="ex-name">Mountain Climbers</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 30 Sek</span><span class="ex-tag green">Bauch/Cardio</span></div>
+            <div class="ex-tip">Schnell die Knie abwechselnd zur Brust ziehen. Hüfte tief halten.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d4-e1','w1d4',5)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d4-e1','w1d4',5)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d4-e1','w1d4',5)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="ex-card" id="w1d4-e2">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Russian-Twist.gif" alt="Russian Twist" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🔄 Russian Twist</div>
+          <div class="ex-info">
+            <div class="ex-name">Russian Twist</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 20</span><span class="ex-tag green">Bauch seitlich</span></div>
+            <div class="ex-tip">Mit einer Kurzhantel oder Medizinball. Oberkörper zurücklehnen. Sehr gut für Taille!</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d4-e2','w1d4',5)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d4-e2','w1d4',5)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d4-e2','w1d4',5)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="ex-card" id="w1d4-e3">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Raise.gif" alt="Beinhebe hängend" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🦵 Hängende Beinhebe</div>
+          <div class="ex-info">
+            <div class="ex-name">Hängende Beinhebe (Stange)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Unterer Bauch</span></div>
+            <div class="ex-tip">An der Klimmzugstange hängen, Beine gerade hochheben. Langsam senken!</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d4-e3','w1d4',5)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d4-e3','w1d4',5)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d4-e3','w1d4',5)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notes-section"><label>📝 Notizen:</label><textarea id="w1d4-notes" onchange="saveNote('w1d4')" placeholder="Notizen..."></textarea></div>
+      <div class="day-footer"><button class="complete-day-btn" id="w1d4-btn" onclick="completeDay('w1d4')">✓ Tag als abgeschlossen markieren</button></div>
+    </div>
+  </div>
+
+  <!-- TAG 5 -->
+  <div class="day-card" id="w1d5">
+    <div class="day-header" onclick="toggleDay('w1d5')">
+      <div class="day-header-left">
+        <div class="day-badge full">FR</div>
+        <div>
+          <div class="day-title">Tag 5 – Ganzkörper &amp; Ausdauer</div>
+          <div class="day-sub">Freitag · 6 Übungen · ca. 55 Min</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="day-progress-mini"><div class="mini-bar-wrap"><div class="mini-bar-fill" id="w1d5-mbar" style="width:0%"></div></div><div class="mini-pct" id="w1d5-mpct">0%</div></div>
+        <div class="day-done-badge" id="w1d5-badge">✓ Fertig</div>
+        <span class="chevron">▾</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="exercise-grid">
+        <div class="ex-card" id="w1d5-e1">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Romanian-Deadlift.gif" alt="Romanian Deadlift" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🏋️ RDL</div>
+          <div class="ex-info">
+            <div class="ex-name">Romanian Deadlift</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Rücken/Beine</span></div>
+            <div class="ex-tip">Rücken gerade, Stange nah am Körper. Hintern nach hinten schieben (Scharnierbewegung).</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e1','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e1','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e1','w1d5',6)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="ex-card" id="w1d5-e2">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Goblet-Squat.gif" alt="Goblet Squat" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🏋️ Goblet Squat</div>
+          <div class="ex-info">
+            <div class="ex-name">Goblet Squat (Kurzhantel)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Ganzkörper</span></div>
+            <div class="ex-tip">Kurzhantel vor der Brust halten. Tief in die Hocke – perfekt für Anfänger!</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e2','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e2','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e2','w1d5',6)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="ex-card" id="w1d5-e3">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Push-Up.gif" alt="Liegestütz" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">💪 Liegestütz</div>
+          <div class="ex-info">
+            <div class="ex-name">Liegestütz</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Brust/Trizeps</span></div>
+            <div class="ex-tip">Körper gerade, Ellbogen 45° anwinkeln. Brust fast den Boden berühren.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d5-e3','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d5-e3','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="Wdh"><span class="set-unit">×</span><div class="set-check" onclick="toggleSet(this,'w1d5-e3','w1d5',6)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="ex-card" id="w1d5-e4">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Row.gif" alt="KH Rudern" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🚣 KH Rudern</div>
+          <div class="ex-info">
+            <div class="ex-name">Kurzhantel-Rudern (beidarmig)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Rücken</span></div>
+            <div class="ex-tip">Vorgebeugt stehen, beide KH gleichzeitig hochziehen. Schulterblätter zusammendrücken.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e4','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e4','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e4','w1d5',6)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="ex-card" id="w1d5-e5">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/06/Plank.gif" alt="Plank" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🧘 Plank</div>
+          <div class="ex-info">
+            <div class="ex-name">Plank (Steigerung)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 40 Sek</span><span class="ex-tag green">Core</span></div>
+            <div class="ex-tip">10 Sek länger als Woche 1 Tag 3. Woche für Woche steigern!</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d5-e5','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d5-e5','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="Sek"><span class="set-unit">s</span><div class="set-check" onclick="toggleSet(this,'w1d5-e5','w1d5',6)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="ex-card" id="w1d5-e6">
+          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Standing-Calf-Raise.gif" alt="Wadenheben" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ex-gif-placeholder" style="display:none">🦵 Wadenheben</div>
+          <div class="ex-info">
+            <div class="ex-name">Wadenheben (stehend)</div>
+            <div class="ex-meta"><span class="ex-tag">3 × 20</span><span class="ex-tag blue">Waden</span></div>
+            <div class="ex-tip">Langsam senken. Auf einer Treppenstufe für größeren Bewegungsumfang.</div>
+            <div class="set-tracker">
+              <div class="set-row"><span class="set-label">Satz 1</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e6','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 2</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e6','w1d5',6)"></div></div>
+              <div class="set-row"><span class="set-label">Satz 3</span><input class="set-input" type="number" placeholder="kg"><span class="set-unit">kg</span><div class="set-check" onclick="toggleSet(this,'w1d5-e6','w1d5',6)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notes-section"><label>📝 Notizen:</label><textarea id="w1d5-notes" onchange="saveNote('w1d5')" placeholder="Notizen..."></textarea></div>
+      <div class="day-footer"><button class="complete-day-btn" id="w1d5-btn" onclick="completeDay('w1d5')">✓ Tag als abgeschlossen markieren</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     WOCHE 2 – Gleiche Übungen, leicht mehr Gewicht
+═══════════════════════════════════════════════════════ -->
+<div class="week-content" id="week-2">
+  <div class="week-header">
+    <h2>Woche 2 – Intensivierung</h2>
+    <p>Gleicher Split – Gewichte um 5–10% erhöhen. Pausen: 60–90 Sek. Fokus auf Muskel-Geist-Verbindung.</p>
+  </div>
+  <div id="week2-placeholder" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);">
+    <div style="font-size:2rem;margin-bottom:12px">📋</div>
+    <div style="font-weight:700;color:var(--text);margin-bottom:8px">Woche 2 – Gleicher Plan wie Woche 1</div>
+    <div style="font-size:.9rem;line-height:1.6">Alle 5 Tage identisch aufgebaut.<br>Erhöhe die Gewichte um 5–10% gegenüber Woche 1.<br>Reduziere Pausen auf 60 Sekunden zwischen Sätzen.</div>
+    <div style="margin-top:20px;padding:16px;background:var(--card2);border-radius:10px;text-align:left;display:inline-block;min-width:300px">
+      <div style="color:var(--accent);font-weight:700;margin-bottom:10px">💡 Woche 2 Ziele:</div>
+      <div style="font-size:.85rem;line-height:1.8;color:var(--muted)">
+        ✓ Bankdrücken: +2.5 kg gegenüber Woche 1<br>
+        ✓ Kniebeuge: +5 kg gegenüber Woche 1<br>
+        ✓ Latzug: +5 kg gegenüber Woche 1<br>
+        ✓ Plank: 40 Sek (statt 30)<br>
+        ✓ HIIT: 10 Runden (statt 8)<br>
+        ✓ Pausen: 60 Sek (statt 90)
+      </div>
+    </div>
+  </div>
+  <!-- W2 Days – same structure, abbreviated for space -->
+  <div id="w2-days"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     WOCHE 3 – Progression: 4 Sätze
+═══════════════════════════════════════════════════════ -->
+<div class="week-content" id="week-3">
+  <div class="week-header">
+    <h2>Woche 3 – Progression (4 Sätze)</h2>
+    <p>Jetzt 4 Sätze pro Übung. Wiederholungen: 8–12. Schwerere Gewichte. Pausen: 90 Sek.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);">
+    <div style="font-size:2rem;margin-bottom:12px">🔥</div>
+    <div style="font-weight:700;color:var(--text);margin-bottom:8px">Woche 3 – Höhere Intensität</div>
+    <div style="font-size:.9rem;line-height:1.6">Gleiche Übungen, aber jetzt 4 Sätze × 8–12 Wdh.<br>Gewichte aus Woche 2 beibehalten oder steigern.</div>
+    <div style="margin-top:20px;padding:16px;background:var(--card2);border-radius:10px;text-align:left;display:inline-block;min-width:300px">
+      <div style="color:var(--accent);font-weight:700;margin-bottom:10px">💡 Woche 3 Änderungen:</div>
+      <div style="font-size:.85rem;line-height:1.8;color:var(--muted)">
+        ✓ 4 Sätze pro Übung (statt 3)<br>
+        ✓ 8–12 Wdh (schwerere Gewichte)<br>
+        ✓ HIIT: 12 Runden à 30/60 Sek<br>
+        ✓ Plank: 50 Sek<br>
+        ✓ Bicycle Crunch: 25 Wdh<br>
+        ✓ Neue Übung: Incline Bench + Dips
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     WOCHE 4 – Peak Week
+═══════════════════════════════════════════════════════ -->
+<div class="week-content" id="week-4">
+  <div class="week-header">
+    <h2>Woche 4 – Peak Week 💪</h2>
+    <p>Maximale Intensität. 4 Sätze × 6–10 Wdh mit den schwersten Gewichten bisher. Du schaffst das!</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);">
+    <div style="font-size:2rem;margin-bottom:12px">🏆</div>
+    <div style="font-weight:700;color:var(--text);margin-bottom:8px">Woche 4 – Maximale Leistung</div>
+    <div style="font-size:.9rem;line-height:1.6">Die härteste Woche. Gib alles – dann kommt Ruhe und Erholung!</div>
+    <div style="margin-top:20px;padding:16px;background:var(--card2);border-radius:10px;text-align:left;display:inline-block;min-width:300px">
+      <div style="color:var(--accent);font-weight:700;margin-bottom:10px">💡 Woche 4 Änderungen:</div>
+      <div style="font-size:.85rem;line-height:1.8;color:var(--muted)">
+        ✓ 4 Sätze × 6–10 Wdh (maximale Gewichte)<br>
+        ✓ Drop-Sets bei der letzten Übung pro Muskelgruppe<br>
+        ✓ HIIT: 15 Runden à 40/60 Sek<br>
+        ✓ Plank: 60 Sek<br>
+        ✓ Zusatz: 10 Min Fahrrad nach jedem Training<br>
+        ✓ Gewichte: +10–15% gegenüber Woche 1
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:14px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:10px;max-width:400px;margin-left:auto;margin-right:auto;">
+      <div style="color:var(--green);font-weight:700;margin-bottom:6px">🎯 Nach 4 Wochen erwartet dich:</div>
+      <div style="font-size:.83rem;line-height:1.7;color:var(--muted);text-align:left">
+        → Sichtbarer Unterschied am Bauch &amp; Brust<br>
+        → 3–5 kg Fettverlust möglich (bei guter Ernährung)<br>
+        → Deutlich mehr Kraft bei allen Grundübungen<br>
+        → Bessere Körperspannung und Haltung<br>
+        → Grundlage für die nächsten 4 Wochen gelegt!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     ERNÄHRUNGSTIPPS
+═══════════════════════════════════════════════════════ -->
+<div style="max-width:900px;margin:0 auto 40px;padding:0 16px;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+    <h3 style="color:var(--accent);margin-bottom:16px;font-size:1.1rem">🥗 Ernährungstipps (wichtig für Fettabbau!)</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+      <div style="background:var(--card2);border-radius:8px;padding:14px;">
+        <div style="font-weight:700;margin-bottom:6px">🎯 Kalorien</div>
+        <div style="font-size:.82rem;color:var(--muted);line-height:1.5">Ziel: ~2.000–2.200 kcal/Tag<br>(Kaloriendefizit für Fettabbau)</div>
+      </div>
+      <div style="background:var(--card2);border-radius:8px;padding:14px;">
+        <div style="font-weight:700;margin-bottom:6px">💪 Protein</div>
+        <div style="font-size:.82rem;color:var(--muted);line-height:1.5">~160–180g/Tag<br>Hühnchen, Thunfisch, Eier, Quark, Whey</div>
+      </div>
+      <div style="background:var(--card2);border-radius:8px;padding:14px;">
+        <div style="font-weight:700;margin-bottom:6px">💧 Wasser</div>
+        <div style="font-size:.82rem;color:var(--muted);line-height:1.5">3–4 Liter/Tag<br>Besonders an Trainingstagen</div>
+      </div>
+      <div style="background:var(--card2);border-radius:8px;padding:14px;">
+        <div style="font-weight:700;margin-bottom:6px">😴 Schlaf</div>
+        <div style="font-size:.82rem;color:var(--muted);line-height:1.5">7–9 Stunden<br>Muskeln wachsen im Schlaf!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── TOGGLE DAY ──
+function toggleDay(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// ── TOGGLE SET CHECK ──
+function toggleSet(el, exId, dayId, totalEx) {
+  el.classList.toggle('done');
+  el.textContent = el.classList.contains('done') ? '✓' : '';
+  saveState();
+  updateExerciseCard(exId, dayId, totalEx);
+}
+
+function updateExerciseCard(exId, dayId, totalEx) {
+  const card = document.getElementById(exId);
+  if (!card) return;
+  const checks = card.querySelectorAll('.set-check');
+  const done = card.querySelectorAll('.set-check.done').length;
+  card.classList.toggle('completed', done === checks.length && checks.length > 0);
+  updateDayProgress(dayId, totalEx);
+}
+
+function updateDayProgress(dayId, totalEx) {
+  const dayEl = document.getElementById(dayId);
+  if (!dayEl) return;
+  const allChecks = dayEl.querySelectorAll('.set-check');
+  const doneChecks = dayEl.querySelectorAll('.set-check.done');
+  const cardioButtons = dayEl.querySelectorAll('.cardio-done-btn.done').length;
+  const total = allChecks.length + dayEl.querySelectorAll('.cardio-done-btn').length;
+  const done = doneChecks.length + cardioButtons;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const mbar = document.getElementById(dayId + '-mbar');
+  const mpct = document.getElementById(dayId + '-mpct');
+  if (mbar) mbar.style.width = pct + '%';
+  if (mpct) mpct.textContent = pct + '%';
+  updateOverall();
+}
+
+// ── CARDIO TOGGLE ──
+function toggleCardio(btn, dayId, totalEx) {
+  btn.classList.toggle('done');
+  btn.textContent = btn.classList.contains('done') ? '✓ Erledigt!' : 'Als erledigt markieren';
+  saveState();
+  updateDayProgress(dayId, totalEx);
+}
+
+// ── COMPLETE DAY ──
+function completeDay(dayId) {
+  const btn = document.getElementById(dayId + '-btn');
+  if (btn.classList.contains('done')) return;
+  btn.classList.add('done');
+  btn.textContent = '✅ Tag abgeschlossen!';
+  const badge = document.getElementById(dayId + '-badge');
+  if (badge) badge.style.display = 'block';
+  const mbar = document.getElementById(dayId + '-mbar');
+  const mpct = document.getElementById(dayId + '-mpct');
+  if (mbar) mbar.style.width = '100%';
+  if (mpct) mpct.textContent = '100%';
+  saveState();
+  updateOverall();
+}
+
+// ── OVERALL PROGRESS ──
+function updateOverall() {
+  const allDayBtns = document.querySelectorAll('.complete-day-btn');
+  const done = document.querySelectorAll('.complete-day-btn.done').length;
+  const total = allDayBtns.length;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const bar = document.getElementById('overall-bar');
+  const lbl = document.getElementById('overall-done');
+  const pctEl = document.getElementById('overall-pct');
+  if (bar) bar.style.width = pct + '%';
+  if (lbl) lbl.textContent = done + ' von ' + total + ' Tagen abgeschlossen';
+  if (pctEl) pctEl.textContent = pct + '%';
+}
+
+// ── WEEK TABS ──
+function showWeek(n) {
+  document.querySelectorAll('.week-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.week-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('week-' + n).classList.add('active');
+  document.querySelectorAll('.week-tab')[n - 1].classList.add('active');
+}
+
+// ── NOTES ──
+function saveNote(dayId) {
+  const ta = document.getElementById(dayId + '-notes');
+  if (ta) localStorage.setItem('note-' + dayId, ta.value);
+}
+
+// ── SAVE / LOAD ──
+function saveState() {
+  const state = {};
+  document.querySelectorAll('.set-check').forEach((el, i) => {
+    state['sc-' + i] = el.classList.contains('done');
+  });
+  document.querySelectorAll('.cardio-done-btn').forEach((el, i) => {
+    state['cb-' + i] = el.classList.contains('done');
+  });
+  document.querySelectorAll('.complete-day-btn').forEach((el, i) => {
+    state['db-' + i] = el.classList.contains('done');
+  });
+  document.querySelectorAll('.set-input').forEach((el, i) => {
+    state['si-' + i] = el.value;
+  });
+  localStorage.setItem('trainingsplan', JSON.stringify(state));
+}
+
+function loadState() {
+  const raw = localStorage.getItem('trainingsplan');
+  if (!raw) return;
+  const state = JSON.parse(raw);
+  document.querySelectorAll('.set-check').forEach((el, i) => {
+    if (state['sc-' + i]) { el.classList.add('done'); el.textContent = '✓'; }
+  });
+  document.querySelectorAll('.cardio-done-btn').forEach((el, i) => {
+    if (state['cb-' + i]) { el.classList.add('done'); el.textContent = '✓ Erledigt!'; }
+  });
+  document.querySelectorAll('.complete-day-btn').forEach((el, i) => {
+    if (state['db-' + i]) {
+      el.classList.add('done'); el.textContent = '✅ Tag abgeschlossen!';
+      const dayId = el.id.replace('-btn', '');
+      const badge = document.getElementById(dayId + '-badge');
+      if (badge) badge.style.display = 'block';
+    }
+  });
+  document.querySelectorAll('.set-input').forEach((el, i) => {
+    if (state['si-' + i] !== undefined) el.value = state['si-' + i];
+  });
+  // notes
+  ['w1d1','w1d2','w1d3','w1d4','w1d5'].forEach(id => {
+    const ta = document.getElementById(id + '-notes');
+    const saved = localStorage.getItem('note-' + id);
+    if (ta && saved) ta.value = saved;
+  });
+  // recalc all progress bars
+  ['w1d1','w1d2','w1d3','w1d5'].forEach(id => updateDayProgress(id, 6));
+  updateDayProgress('w1d4', 5);
+  updateOverall();
+}
+
+function resetAll() {
+  if (!confirm('Wirklich alles zurücksetzen? Alle Fortschritte gehen verloren!')) return;
+  localStorage.removeItem('trainingsplan');
+  ['w1d1','w1d2','w1d3','w1d4','w1d5'].forEach(id => localStorage.removeItem('note-' + id));
+  location.reload();
+}
+
+// Auto-save inputs
+document.addEventListener('change', function(e) {
+  if (e.target.classList.contains('set-input')) saveState();
+});
+
+// Init
+window.addEventListener('DOMContentLoaded', loadState);
+</script>
+</body>
+</html>
