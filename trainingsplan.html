@@ -128,9 +128,18 @@
     background: #111; display: block;
   }
   .ex-gif-placeholder {
-    width: 100%; height: 160px; background: #111;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted); font-size: .8rem;
+    width: 100%; height: 160px;
+    background: linear-gradient(135deg, #12151f 0%, #1e2235 50%, #12151f 100%);
+    background-size: 200% 200%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; border-bottom: 1px solid var(--border);
+    animation: ph-shimmer 2.5s ease infinite;
+  }
+  .ex-gif-placeholder .ph-icon { font-size: 2.4rem; opacity: .75; }
+  .ex-gif-placeholder .ph-label { font-size: .72rem; color: #4a5575; letter-spacing: .5px; }
+  @keyframes ph-shimmer {
+    0%,100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
   }
   .ex-info { padding: 12px; }
   .ex-name { font-weight: 700; font-size: .95rem; margin-bottom: 4px; }
@@ -289,8 +298,8 @@
       <div class="exercise-grid">
 
         <div class="ex-card" id="w1d1-e1">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bench-Press.gif" alt="Bankdrücken" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🏋️ Bankdrücken</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/10/barbell-bench-press.gif" alt="Bankdrücken" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🏋️</span><span class="ph-label">Bankdrücken</span></div>
           <div class="ex-info">
             <div class="ex-name">Bankdrücken (Langhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Brust</span></div>
@@ -304,8 +313,8 @@
         </div>
 
         <div class="ex-card" id="w1d1-e2">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Incline-Dumbbell-Press.gif" alt="Schrägbankdrücken" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">💪 Schrägbank</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/11/incline-dumbbell-press.gif" alt="Schrägbankdrücken" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">💪</span><span class="ph-label">Schrägbank</span></div>
           <div class="ex-info">
             <div class="ex-name">Schrägbankdrücken (Kurzhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Obere Brust</span></div>
@@ -319,8 +328,8 @@
         </div>
 
         <div class="ex-card" id="w1d1-e3">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Fly.gif" alt="Kabelzug Brust" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🔁 Kabelzug Brust</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/10/cable-crossover.gif" alt="Kabelzug Brust" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🔁</span><span class="ph-label">Kabelzug Brust</span></div>
           <div class="ex-info">
             <div class="ex-name">Kabelzug Fliegende (Brust)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Brust innen</span></div>
@@ -334,8 +343,8 @@
         </div>
 
         <div class="ex-card" id="w1d1-e4">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Shoulder-Press.gif" alt="Schulterdrücken" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🏋️ Schulter</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/dumbbell-shoulder-press.gif" alt="Schulterdrücken" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🏋️</span><span class="ph-label">Schulterdrücken</span></div>
           <div class="ex-info">
             <div class="ex-name">Schulterdrücken (Kurzhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Schultern</span></div>
@@ -349,8 +358,8 @@
         </div>
 
         <div class="ex-card" id="w1d1-e5">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Lateral-Raise.gif" alt="Seitheben" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">↔️ Seitheben</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/dumbbell-lateral-raise.gif" alt="Seitheben" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">↔️</span><span class="ph-label">Seitheben</span></div>
           <div class="ex-info">
             <div class="ex-name">Seitheben (Kurzhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Seitl. Schulter</span></div>
@@ -364,8 +373,8 @@
         </div>
 
         <div class="ex-card" id="w1d1-e6">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif" alt="Trizeps Pushdown" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">⬇️ Trizeps</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/triceps-pushdown.gif" alt="Trizeps Pushdown" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">⬇️</span><span class="ph-label">Trizeps Pushdown</span></div>
           <div class="ex-info">
             <div class="ex-name">Trizeps Pushdown (Kabel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Trizeps</span></div>
@@ -409,8 +418,8 @@
       <div class="exercise-grid">
 
         <div class="ex-card" id="w1d2-e1">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif" alt="Lat Pulldown" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">⬇️ Lat Pulldown</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/lat-pulldown.gif" alt="Lat Pulldown" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">⬇️</span><span class="ph-label">Lat Pulldown</span></div>
           <div class="ex-info">
             <div class="ex-name">Latzug (Kabel, breiter Griff)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Rücken</span></div>
@@ -424,8 +433,8 @@
         </div>
 
         <div class="ex-card" id="w1d2-e2">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif" alt="Rudern Kabel" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🚣 Kabelrudern</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/seated-cable-row.gif" alt="Rudern Kabel" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🚣</span><span class="ph-label">Kabelrudern</span></div>
           <div class="ex-info">
             <div class="ex-name">Sitzrudern (Kabel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Mitte Rücken</span></div>
@@ -439,8 +448,8 @@
         </div>
 
         <div class="ex-card" id="w1d2-e3">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Row.gif" alt="Kurzhantel Rudern" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">💪 KH Rudern</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/dumbbell-row.gif" alt="Kurzhantel Rudern" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">💪</span><span class="ph-label">KH Rudern</span></div>
           <div class="ex-info">
             <div class="ex-name">Einarmiges KH-Rudern</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Rücken</span></div>
@@ -454,8 +463,8 @@
         </div>
 
         <div class="ex-card" id="w1d2-e4">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif" alt="Face Pull" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🔃 Face Pull</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/face-pull.gif" alt="Face Pull" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🔃</span><span class="ph-label">Face Pull</span></div>
           <div class="ex-info">
             <div class="ex-name">Face Pull (Kabel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag green">Hintere Schulter</span></div>
@@ -469,8 +478,8 @@
         </div>
 
         <div class="ex-card" id="w1d2-e5">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Bicep-Curl.gif" alt="Bizeps Curl" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">💪 Bizeps Curl</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/dumbbell-bicep-curl.gif" alt="Bizeps Curl" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">💪</span><span class="ph-label">Bizeps Curl</span></div>
           <div class="ex-info">
             <div class="ex-name">Bizeps Curl (Kurzhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Bizeps</span></div>
@@ -484,8 +493,8 @@
         </div>
 
         <div class="ex-card" id="w1d2-e6">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Hammer-Curl.gif" alt="Hammer Curl" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🔨 Hammer Curl</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/hammer-curl.gif" alt="Hammer Curl" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🔨</span><span class="ph-label">Hammer Curl</span></div>
           <div class="ex-info">
             <div class="ex-name">Hammer Curl (Kurzhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Bizeps/Unterarm</span></div>
@@ -523,8 +532,8 @@
     <div class="day-body">
       <div class="exercise-grid">
         <div class="ex-card" id="w1d3-e1">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Back-Squat.gif" alt="Kniebeuge" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🦵 Kniebeuge</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/10/barbell-back-squat.gif" alt="Kniebeuge" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🦵</span><span class="ph-label">Kniebeuge</span></div>
           <div class="ex-info">
             <div class="ex-name">Kniebeuge (Langhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Beine/Gesäß</span></div>
@@ -538,8 +547,8 @@
         </div>
 
         <div class="ex-card" id="w1d3-e2">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Press.gif" alt="Beinpresse" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🦵 Beinpresse</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/leg-press.gif" alt="Beinpresse" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🦵</span><span class="ph-label">Beinpresse</span></div>
           <div class="ex-info">
             <div class="ex-name">Beinpresse (Maschine)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Beine</span></div>
@@ -553,8 +562,8 @@
         </div>
 
         <div class="ex-card" id="w1d3-e3">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Curl.gif" alt="Leg Curl" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🦵 Leg Curl</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/lying-leg-curl.gif" alt="Leg Curl" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🦵</span><span class="ph-label">Leg Curl</span></div>
           <div class="ex-info">
             <div class="ex-name">Leg Curl (Maschine)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Oberschenkel hinten</span></div>
@@ -568,8 +577,8 @@
         </div>
 
         <div class="ex-card" id="w1d3-e4">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/06/Plank.gif" alt="Plank" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🧘 Plank</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/plank.gif" alt="Plank" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🧘</span><span class="ph-label">Plank</span></div>
           <div class="ex-info">
             <div class="ex-name">Plank (Unterarmstütz)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 30 Sek</span><span class="ex-tag green">Core/Bauch</span></div>
@@ -583,8 +592,8 @@
         </div>
 
         <div class="ex-card" id="w1d3-e5">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Bicycle-Crunch.gif" alt="Bicycle Crunch" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🚴 Bicycle Crunch</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/bicycle-crunch.gif" alt="Bicycle Crunch" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🚴</span><span class="ph-label">Bicycle Crunch</span></div>
           <div class="ex-info">
             <div class="ex-name">Bicycle Crunch</div>
             <div class="ex-meta"><span class="ex-tag">3 × 20</span><span class="ex-tag green">Bauch seitlich</span></div>
@@ -598,8 +607,8 @@
         </div>
 
         <div class="ex-card" id="w1d3-e6">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Raise.gif" alt="Leg Raise" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🦵 Leg Raise</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/leg-raise.gif" alt="Leg Raise" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🦵</span><span class="ph-label">Leg Raise</span></div>
           <div class="ex-info">
             <div class="ex-name">Liegende Beinhebe</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag green">Unterer Bauch</span></div>
@@ -648,8 +657,8 @@
       </div>
       <div class="exercise-grid">
         <div class="ex-card" id="w1d4-e1">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" alt="Mountain Climber" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🧗 Mountain Climber</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/mountain-climber.gif" alt="Mountain Climber" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🧗</span><span class="ph-label">Mountain Climber</span></div>
           <div class="ex-info">
             <div class="ex-name">Mountain Climbers</div>
             <div class="ex-meta"><span class="ex-tag">3 × 30 Sek</span><span class="ex-tag green">Bauch/Cardio</span></div>
@@ -662,8 +671,8 @@
           </div>
         </div>
         <div class="ex-card" id="w1d4-e2">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Russian-Twist.gif" alt="Russian Twist" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🔄 Russian Twist</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/russian-twist.gif" alt="Russian Twist" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🔄</span><span class="ph-label">Russian Twist</span></div>
           <div class="ex-info">
             <div class="ex-name">Russian Twist</div>
             <div class="ex-meta"><span class="ex-tag">3 × 20</span><span class="ex-tag green">Bauch seitlich</span></div>
@@ -676,8 +685,8 @@
           </div>
         </div>
         <div class="ex-card" id="w1d4-e3">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Leg-Raise.gif" alt="Beinhebe hängend" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🦵 Hängende Beinhebe</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/leg-raise.gif" alt="Beinhebe hängend" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🦵</span><span class="ph-label">Beinhebe hängend</span></div>
           <div class="ex-info">
             <div class="ex-name">Hängende Beinhebe (Stange)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Unterer Bauch</span></div>
@@ -714,8 +723,8 @@
     <div class="day-body">
       <div class="exercise-grid">
         <div class="ex-card" id="w1d5-e1">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Romanian-Deadlift.gif" alt="Romanian Deadlift" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🏋️ RDL</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/romanian-deadlift.gif" alt="Romanian Deadlift" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🏋️</span><span class="ph-label">Romanian Deadlift</span></div>
           <div class="ex-info">
             <div class="ex-name">Romanian Deadlift</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag blue">Rücken/Beine</span></div>
@@ -728,8 +737,8 @@
           </div>
         </div>
         <div class="ex-card" id="w1d5-e2">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Goblet-Squat.gif" alt="Goblet Squat" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🏋️ Goblet Squat</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/10/goblet-squat.gif" alt="Goblet Squat" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🏋️</span><span class="ph-label">Goblet Squat</span></div>
           <div class="ex-info">
             <div class="ex-name">Goblet Squat (Kurzhantel)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Ganzkörper</span></div>
@@ -742,8 +751,8 @@
           </div>
         </div>
         <div class="ex-card" id="w1d5-e3">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Push-Up.gif" alt="Liegestütz" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">💪 Liegestütz</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/push-up.gif" alt="Liegestütz" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">💪</span><span class="ph-label">Liegestütz</span></div>
           <div class="ex-info">
             <div class="ex-name">Liegestütz</div>
             <div class="ex-meta"><span class="ex-tag">3 × 15</span><span class="ex-tag blue">Brust/Trizeps</span></div>
@@ -756,8 +765,8 @@
           </div>
         </div>
         <div class="ex-card" id="w1d5-e4">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Row.gif" alt="KH Rudern" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🚣 KH Rudern</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/dumbbell-row.gif" alt="KH Rudern" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🚣</span><span class="ph-label">KH Rudern beidarmig</span></div>
           <div class="ex-info">
             <div class="ex-name">Kurzhantel-Rudern (beidarmig)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 12</span><span class="ex-tag green">Rücken</span></div>
@@ -770,8 +779,8 @@
           </div>
         </div>
         <div class="ex-card" id="w1d5-e5">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/06/Plank.gif" alt="Plank" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🧘 Plank</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/plank.gif" alt="Plank" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🧘</span><span class="ph-label">Plank</span></div>
           <div class="ex-info">
             <div class="ex-name">Plank (Steigerung)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 40 Sek</span><span class="ex-tag green">Core</span></div>
@@ -784,8 +793,8 @@
           </div>
         </div>
         <div class="ex-card" id="w1d5-e6">
-          <img class="ex-gif" src="https://fitnessprogramer.com/wp-content/uploads/2021/02/Standing-Calf-Raise.gif" alt="Wadenheben" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ex-gif-placeholder" style="display:none">🦵 Wadenheben</div>
+          <img class="ex-gif" src="https://www.inspireusafoundation.org/wp-content/uploads/2022/09/standing-calf-raise.gif" alt="Wadenheben" onerror="gifError(this)">
+          <div class="ex-gif-placeholder" style="display:none"><span class="ph-icon">🦵</span><span class="ph-label">Wadenheben</span></div>
           <div class="ex-info">
             <div class="ex-name">Wadenheben (stehend)</div>
             <div class="ex-meta"><span class="ex-tag">3 × 20</span><span class="ex-tag blue">Waden</span></div>
@@ -1069,6 +1078,55 @@ function resetAll() {
   localStorage.removeItem('trainingsplan');
   ['w1d1','w1d2','w1d3','w1d4','w1d5'].forEach(id => localStorage.removeItem('note-' + id));
   location.reload();
+}
+
+// ── MULTI-SOURCE GIF FALLBACK ──
+// Fallback chain: inspireusafoundation → wger → muscleandstrength → placeholder
+const gifFallbacks = {
+  'barbell-bench-press':     ['https://wger.de/static/images/exercises/2/barbell_bench_press.gif','https://cdn.muscleandstrength.com/sites/default/files/styles/400x250/public/field/image/exercise/benchpress.jpg'],
+  'incline-dumbbell-press':  ['https://wger.de/static/images/exercises/incline_dumbbell_press.gif'],
+  'cable-crossover':         ['https://wger.de/static/images/exercises/cable_crossover.gif'],
+  'dumbbell-shoulder-press': ['https://wger.de/static/images/exercises/dumbbell_shoulder_press.gif'],
+  'dumbbell-lateral-raise':  [],
+  'triceps-pushdown':        [],
+  'lat-pulldown':            [],
+  'seated-cable-row':        [],
+  'dumbbell-row':            [],
+  'face-pull':               [],
+  'dumbbell-bicep-curl':     [],
+  'hammer-curl':             [],
+  'barbell-back-squat':      [],
+  'leg-press':               [],
+  'lying-leg-curl':          [],
+  'plank':                   [],
+  'bicycle-crunch':          [],
+  'leg-raise':               [],
+  'mountain-climber':        [],
+  'russian-twist':           [],
+  'romanian-deadlift':       [],
+  'goblet-squat':            [],
+  'push-up':                 [],
+  'standing-calf-raise':     [],
+};
+
+function gifError(img) {
+  // Extract exercise key from src URL
+  const src = img.src || '';
+  const match = src.match(/\/([^/]+)\.gif$/);
+  const key = match ? match[1] : '';
+  const tried = parseInt(img.dataset.tried || '0');
+  const fallbacks = gifFallbacks[key] || [];
+  if (tried < fallbacks.length) {
+    img.dataset.tried = tried + 1;
+    img.src = fallbacks[tried];
+  } else {
+    // Show styled placeholder
+    img.style.display = 'none';
+    const ph = img.nextElementSibling;
+    if (ph && ph.classList.contains('ex-gif-placeholder')) {
+      ph.style.display = 'flex';
+    }
+  }
 }
 
 // Auto-save inputs
